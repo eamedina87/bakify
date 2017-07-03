@@ -5,7 +5,7 @@
 
     <TextView
         android:id="@+id/detail_ingredients_title"
-        style="@style/HeaderTitle"
+        style="@style/mHeaderTitle"
         android:text="@string/ingredients_title"
         />
 
@@ -23,7 +23,7 @@
         <TextView
             android:id="@+id/detail_ingredients_empty"
             android:text="@string/ingredients_empty"
-            style="@style/EmptyDisplay"
+            style="@style/mEmptyDisplay"
             />
 
     </FrameLayout>
@@ -32,7 +32,7 @@
 
     <TextView
         android:id="@+id/detail_steps_title"
-        style="@style/HeaderTitle"
+        style="@style/mHeaderTitle"
         android:text="@string/steps_title"
         />
 
@@ -52,7 +52,7 @@
         <TextView
             android:id="@+id/detail_steps_empty"
             android:text="@string/steps_empty"
-            style="@style/EmptyDisplay"
+            style="@style/mEmptyDisplay"
             />
 
     </FrameLayout>

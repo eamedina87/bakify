@@ -2,14 +2,11 @@ package ec.medinamobile.bakify.detail.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,11 +20,14 @@ import ec.medinamobile.bakify.entities.Ingredient;
 import ec.medinamobile.bakify.entities.Recipe;
 import ec.medinamobile.bakify.entities.Step;
 import ec.medinamobile.bakify.utils.Constants;
+import ec.medinamobile.bakify.video.ui.StepVideoActivity;
 
 /**
  * Created by Erick on 2/7/17.
  */
-
+//(TODO) Test on configuration changes
+//(TODO) Add Content Description
+//(TODO) Make tablet compatible
 public class RecipeDetailActivity extends AppCompatActivity implements RecipeDetailView, OnStepItemClickListener{
 
     @BindView(R.id.detail_ingredients_list)
@@ -39,7 +39,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
     @BindView(R.id.detail_steps_title)
     TextView stepsTitle;
     private Recipe mRecipe;
-    RecipeDetailPresenter presenter;
+    RecipeDetailPresenter mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,22 +59,22 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
     }
 
     private void setupPresenter() {
-        presenter = new RecipeDetailPresenterImpl(this, this);
-        presenter.onCreate();
+        mPresenter = new RecipeDetailPresenterImpl(this, this);
+        mPresenter.onCreate();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        presenter.onDestroy();
+        mPresenter.onDestroy();
     }
 
     private void getStepsFromDB() {
-        presenter.onRetrieveSteps(mRecipe.getId());
+        mPresenter.onRetrieveSteps(mRecipe.getId());
     }
 
     private void getIngredientsFromDB() {
-        presenter.onRetrieveIngredients(mRecipe.getId());
+        mPresenter.onRetrieveIngredients(mRecipe.getId());
     }
 
 
@@ -129,17 +129,20 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
         } else {
             //Show EmptyDisplay
         }
-
     }
 
     @Override
     public void showStepVideo(Step step) {
-
+        Intent intent = new Intent(this, StepVideoActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(Constants.INTENT_EXTRA_STEP, step);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
 
     @Override
     public void onStepClicked(Step step) {
-        Toast.makeText(this, String.valueOf(step.getShortDescription()), Toast.LENGTH_SHORT).show();
+        mPresenter.onStepSelected(step);
     }
 }

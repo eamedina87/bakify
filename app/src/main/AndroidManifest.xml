@@ -25,12 +25,20 @@
         </activity>
         <activity android:name=".detail.ui.RecipeDetailActivity"
             android:parentActivityName=".main.ui.MainActivity"
+            android:launchMode="singleTop"
             >
             <meta-data android:name="android.support.PARENT_ACTIVITY"
                 android:value=".main.ui.MainActivity"
                 />
         </activity>
-
+        <activity android:name=".video.ui.StepVideoActivity"
+            android:parentActivityName=".detail.ui.RecipeDetailActivity"
+            android:label="@string/step_video_title"
+            >
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value=".detail.ui.RecipeDetailActivity"
+                />
+        </activity>
         <provider
             android:authorities="ec.medinamobile.bakify.BakifyProvider"
             android:name=".database.generated.BakifyProvider"/>

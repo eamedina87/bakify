@@ -17,22 +17,22 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="ItemTitle" parent="Base.TextAppearance.AppCompat.Display1">
+    <style name="mItemTitle" parent="Base.TextAppearance.AppCompat.Display1">
         <item name="android:textColor">@color/recipe_item_text_color</item>
     </style>
 
-    <style name="HeaderTitle" parent="Base.TextAppearance.AppCompat.Headline">
+    <style name="mHeaderTitle" parent="Base.TextAppearance.AppCompat.Headline">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:textColor">@color/detail_header_text_color</item>
         <item name="android:padding">@dimen/detail_title_padding</item>
     </style>
 
-    <style name="Recipe" parent="Base.TextAppearance.AppCompat.Subhead">
+    <style name="mRecipe" parent="Base.TextAppearance.AppCompat.Subhead">
 
     </style>
 
-    <style name="EmptyDisplay" parent="Base.TextAppearance.AppCompat.Headline">
+    <style name="mEmptyDisplay" parent="Base.TextAppearance.AppCompat.Headline">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center</item>
@@ -40,7 +40,7 @@
         <item name="android:layout_gravity">center</item>
     </style>
 
-    <style name="Quantity" parent="Base.TextAppearance.AppCompat.Headline"></style>
+    <style name="mQuantity" parent="Base.TextAppearance.AppCompat.Headline"></style>
 
 
 </resources>

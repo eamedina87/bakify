@@ -39,6 +39,9 @@ import ec.medinamobile.bakify.utils.PreferenceUtils;
  * the Content Provider
  */
 
+//(TODO) Apply MVP Pattern
+//(TODO) Test on orientation changes
+//(TODO) Add contentDescription
 public class MainActivity extends AppCompatActivity implements OnRecipeLoadingListener, OnRecipeItemClickListener, OnRecipeCursorLoadingListener {
 
     @BindView(R.id.contentLayout)

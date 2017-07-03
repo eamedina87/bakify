@@ -17,6 +17,8 @@ import ec.medinamobile.bakify.entities.Recipe;
 
 public class JsonUtils {
 
+    //(TODO) Check why isnt server_id being assigned
+
     public static Recipe[] getRecipesFromJson(String recipesJson){
         if (recipesJson==null) return null;
         Gson gson = new Gson();

@@ -14,4 +14,6 @@
     <string name="steps_title">Steps (%d)</string>
     <string name="steps_empty">No steps found. Please retry!</string>
     <string name="ingredients_empty">No ingredients found. Please retry!</string>
+    <string name="step_video_title">Step</string>
+    <string name="step_video_title_number">Step %d</string>
 </resources>
