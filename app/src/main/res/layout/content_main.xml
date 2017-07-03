@@ -16,12 +16,8 @@
 
     <TextView
         android:id="@+id/main_empty_display"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="@string/error_empty_database_or_bad_response"
-        android:gravity="center"
-        android:visibility="invisible"
-        android:layout_gravity="center"
+        style="@style/EmptyDisplay"
          />
 
     <ProgressBar

@@ -32,6 +32,7 @@ dependencies {
     compile "com.squareup.okhttp3:okhttp:$rootProject.okhttpLibraryVersion"
     compile "com.google.code.gson:gson:$rootProject.gsonLibraryVersion"
     compile "com.squareup.picasso:picasso:$rootProject.picassoLibraryVersion"
+    compile "org.greenrobot:eventbus:$rootProject.eventBusLibraryVersion"
 
 
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterKnifeLibraryVersion"

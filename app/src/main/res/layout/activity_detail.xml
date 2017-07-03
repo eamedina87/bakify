@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        style="@style/HeaderTitle"
+        android:text="@string/ingredients_title"
+        />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/detail_ingredients_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/detail_ingredients_empty"
+            android:text="@string/ingredients_empty"
+            style="@style/EmptyDisplay"
+            />
+
+    </FrameLayout>
+
+
+
+    <TextView
+        style="@style/HeaderTitle"
+        android:text="@string/steps_title"
+        />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/detail_steps_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/detail_steps_empty"
+            android:text="@string/steps_empty"
+            style="@style/EmptyDisplay"
+            />
+
+    </FrameLayout>
+
+
+
+</LinearLayout>

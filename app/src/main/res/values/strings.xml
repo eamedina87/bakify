@@ -10,4 +10,8 @@
     <string name="btn_retry">Retry</string>
     <string name="error_empty_database_or_bad_response">No recipes found. Please try again!</string>
     <string name="action_refresh">Refresh</string>
+    <string name="ingredients_title">Ingredients</string>
+    <string name="steps_title">Steps</string>
+    <string name="steps_empty">No steps found. Please retry!</string>
+    <string name="ingredients_empty">No ingredients found. Please retry!</string>
 </resources>

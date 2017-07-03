@@ -16,6 +16,7 @@ public interface StepsColumns {
 
     @DataType(INTEGER) @PrimaryKey @AutoIncrement String _ID = "_id";
     @DataType(INTEGER) @NotNull String SERVER_ID = "server_id";
+    @DataType(INTEGER) @NotNull String RECIPE_ID = "recipe_id";
     @DataType(TEXT) @NotNull String  SHORT_DESCRIPTION = "short_description";
     @DataType(TEXT) @NotNull String DESCRIPTION = "description";
     @DataType(TEXT) String VIDEO_URL = "videoURL";

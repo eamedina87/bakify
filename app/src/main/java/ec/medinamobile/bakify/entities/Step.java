@@ -14,6 +14,8 @@ public class Step implements Parcelable{
     private String description;
     private String videoURL;
     private String thumbnailURL;
+    private int serverId;
+    private int recipeId;
 
 
     public Step(){
@@ -27,6 +29,8 @@ public class Step implements Parcelable{
         setDescription(in.readString());
         setVideoURL(in.readString());
         setThumbnailURL(in.readString());
+        setServerId(in.readInt());
+        setRecipeId(in.readInt());
     }
 
     public static final Creator<Step> CREATOR = new Creator<Step>() {
@@ -48,11 +52,13 @@ public class Step implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(id);
-        parcel.writeString(shortDescription);
-        parcel.writeString(description);
-        parcel.writeString(videoURL);
-        parcel.writeString(thumbnailURL);
+        parcel.writeInt(getId());
+        parcel.writeString(getShortDescription());
+        parcel.writeString(getDescription());
+        parcel.writeString(getVideoURL());
+        parcel.writeString(getThumbnailURL());
+        parcel.writeInt(getServerId());
+        parcel.writeInt(getRecipeId());
     }
 
     public int getId() {
@@ -93,5 +99,21 @@ public class Step implements Parcelable{
 
     public void setThumbnailURL(String thumbnailURL) {
         this.thumbnailURL = thumbnailURL;
+    }
+
+    public int getRecipeId() {
+        return recipeId;
+    }
+
+    public void setRecipeId(int recipeId) {
+        this.recipeId = recipeId;
+    }
+
+    public int getServerId() {
+        return serverId;
+    }
+
+    public void setServerId(int serverId) {
+        this.serverId = serverId;
     }
 }

@@ -20,6 +20,7 @@ public class Ingredient implements Parcelable {
     private float quantity;
     private String measure;
     private String ingredient;
+    private int recipeId;
 
     public Ingredient(){
 
@@ -29,6 +30,7 @@ public class Ingredient implements Parcelable {
         setQuantity(parcel.readFloat());
         setMeasure(parcel.readString());
         setIngredient(parcel.readString());
+        setRecipeId(parcel.readInt());
     }
 
     public static Creator<Ingredient> CREATOR = new Creator<Ingredient>() {
@@ -53,6 +55,7 @@ public class Ingredient implements Parcelable {
         parcel.writeFloat(getQuantity());
         parcel.writeString(getMeasure());
         parcel.writeString(getIngredient());
+        parcel.writeInt(getRecipeId());
     }
 
     public float getQuantity() {
@@ -79,4 +82,11 @@ public class Ingredient implements Parcelable {
         this.ingredient = ingredient;
     }
 
+    public int getRecipeId() {
+        return recipeId;
+    }
+
+    public void setRecipeId(int recipe_id) {
+        this.recipeId = recipe_id;
+    }
 }

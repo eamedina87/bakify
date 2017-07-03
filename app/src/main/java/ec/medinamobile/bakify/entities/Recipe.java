@@ -17,6 +17,7 @@ public class Recipe implements Parcelable {
     private Step[] steps;
     private int servings;
     private String image;
+    private int serverId;
 
     public Recipe(){
 
@@ -29,6 +30,7 @@ public class Recipe implements Parcelable {
         setSteps((Step[])parcel.readArray(Step.class.getClassLoader()));
         setServings(parcel.readInt());
         setImage(parcel.readString());
+        setServerId(parcel.readInt());
     }
 
 
@@ -59,6 +61,7 @@ public class Recipe implements Parcelable {
         parcel.writeArray(getSteps());
         parcel.writeInt(getServings());
         parcel.writeString(getImage());
+        parcel.writeInt(getServerId());
     }
 
     public int getId() {
@@ -109,5 +112,12 @@ public class Recipe implements Parcelable {
         this.image = image;
     }
 
+    public int getServerId() {
+        return serverId;
+    }
+
+    public void setServerId(int serverId) {
+        this.serverId = serverId;
+    }
 }
 

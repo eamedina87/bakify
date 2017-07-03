@@ -13,8 +13,6 @@ import ec.medinamobile.bakify.entities.Recipe;
 
 public class RecipesLoaderCallbacks implements LoaderManager.LoaderCallbacks<Recipe[]> {
 
-    public static final int RECIPE_LOADER_ID = 9000;
-
     private Context mContext;
     private String mUrl;
     private OnRecipeLoadingListener mListener;

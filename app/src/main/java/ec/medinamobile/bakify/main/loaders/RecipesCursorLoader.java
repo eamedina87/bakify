@@ -16,8 +16,6 @@ import ec.medinamobile.bakify.database.BakifyProvider;
 
 public class RecipesCursorLoader implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    public static final int RECIPER_CURSOR_LOADER_ID = 10000;
-
     private final Context mContext;
     private final OnRecipeCursorLoadingListener mCursorListener;
     private OnRecipeCursorLoadingListener cursorLoadingListener;

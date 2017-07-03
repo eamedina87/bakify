@@ -6,6 +6,7 @@
     <color name="colorWhite">#FFFFFF</color>
 
     <color name="recipe_item_text_color">@color/colorWhite</color>
+    <color name="detail_header_text_color">@color/colorPrimaryDark</color>
 
     <color name="recipe_1">#FF9800</color>
     <color name="recipe_2">#7C4DFF</color>

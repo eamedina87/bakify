@@ -3,26 +3,17 @@ package ec.medinamobile.bakify.main.ui;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,7 +50,6 @@ public class MainActivity extends AppCompatActivity implements OnRecipeLoadingLi
     @BindView(R.id.progressbar)
     ProgressBar progressBar;
 
-    private Recipe[] recipes;
     private RecipesAdapter mAdapter;
     private RecipesLoaderCallbacks mRecipesLoaderCallbacks;
 
@@ -93,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements OnRecipeLoadingLi
             mRecipesLoaderCallbacks =
                     new RecipesLoaderCallbacks(this, NetworkUtils.JSON_RECIPES_SERVER_URL, this);
             getSupportLoaderManager().initLoader(
-                    RecipesLoaderCallbacks.RECIPE_LOADER_ID,
+                    RecipesLoaderCallbacks.RECIPES_LOADER_ID,
                     null,
                     mRecipesLoaderCallbacks);
         } else {
@@ -110,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements OnRecipeLoadingLi
             showProgress();
             hideAllButProgressBar();
             getSupportLoaderManager().restartLoader(
-                    RecipesLoaderCallbacks.RECIPE_LOADER_ID,
+                    Constants.RECIPES_LOADER_ID,
                     null,
                     mRecipesLoaderCallbacks);
         } else {
@@ -122,13 +112,13 @@ public class MainActivity extends AppCompatActivity implements OnRecipeLoadingLi
     private void loadRecipesFromDB() {
         RecipesCursorLoader cursorLoaderCallbacks = new RecipesCursorLoader(this, this);
         getSupportLoaderManager().initLoader(
-                RecipesCursorLoader.RECIPER_CURSOR_LOADER_ID,
+                Constants.RECIPES_CURSOR_LOADER_ID,
                 null,
                 cursorLoaderCallbacks);
     }
 
     private void setupRecyclerView() {
-        mAdapter = new RecipesAdapter(recipes, this);
+        mAdapter = new RecipesAdapter(null, this);
         recipesList.setAdapter(mAdapter);
         RecyclerView.LayoutManager layoutManager =
                 new GridLayoutManager(this, 1, LinearLayoutManager.VERTICAL,false);
@@ -174,6 +164,10 @@ public class MainActivity extends AppCompatActivity implements OnRecipeLoadingLi
             showRecyclerView();
             ContentValues[] valuesArray = DatabaseUtils.getRecipeContentValuesArray(recipes);
             getContentResolver().bulkInsert(BakifyProvider.Recipes.RECIPES_CONTENT_URI,valuesArray);
+            valuesArray = DatabaseUtils.getIngredientsContentValuesArray(recipes);
+            getContentResolver().bulkInsert(BakifyProvider.Ingredients.INGREDIENTS_CONTENT_URI, valuesArray);
+            valuesArray = DatabaseUtils.getStepsContentValuesArray(recipes);
+            getContentResolver().bulkInsert(BakifyProvider.Steps.STEPS_CONTENT_URI, valuesArray);
             PreferenceUtils.setRecipesInDatabase(this, true);
             onResume();
         }
