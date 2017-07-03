@@ -30,6 +30,7 @@ import ec.medinamobile.bakify.video.ui.StepVideoActivity;
 //(TODO) Make tablet compatible
 public class RecipeDetailActivity extends AppCompatActivity implements RecipeDetailView, OnStepItemClickListener{
 
+
     @BindView(R.id.detail_ingredients_list)
     RecyclerView ingredientsList;
     @BindView(R.id.detail_steps_list)
@@ -38,6 +39,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
     TextView ingredientsTitle;
     @BindView(R.id.detail_steps_title)
     TextView stepsTitle;
+
     private Recipe mRecipe;
     RecipeDetailPresenter mPresenter;
 
@@ -97,16 +99,6 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
         ingredientsList.setAdapter(ingredientsAdapter);
         RecyclerView.LayoutManager ingredientsManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         ingredientsList.setLayoutManager(ingredientsManager);
-    }
-
-    @Override
-    public void enableViews() {
-
-    }
-
-    @Override
-    public void disableViews() {
-
     }
 
     @Override

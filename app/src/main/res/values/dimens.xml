@@ -8,13 +8,13 @@
     <dimen name="fab_margin">16dp</dimen>
 
 
-    <!--RECYCLERVIEW ITEM HEIGHTS-->
+    <!--WIDTHS AND HEIGHTS-->
     <dimen name="recipe_item_height">120dp</dimen>
     <dimen name="ingredient_item_height">60dp</dimen>
     <dimen name="ingredient_item_width">120dp</dimen>
     <dimen name="step_item_height">60dp</dimen>
     <dimen name="step_video_height">100dp</dimen>
-
+    <dimen name="pane_ingredients_steps_width">300dp</dimen>
     <!--PADDINGS-->
     <dimen name="recipe__text_padding">5dp</dimen>
     <dimen name="detail_title_padding">5dp</dimen>
@@ -24,6 +24,7 @@
     <dimen name="ingredients_list_height">100dp</dimen>
     <dimen name="steps_list_height">150dp</dimen>
     <dimen name="divider_lateral_margin">16dp</dimen>
+
 
 
 </resources>

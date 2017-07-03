@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/detail_pane_ingredients_steps"
+        android:layout_width="@dimen/pane_ingredients_steps_width"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        />
+
+    <FrameLayout
+        android:id="@+id/detail_pane_step_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        />
+
+</LinearLayout>

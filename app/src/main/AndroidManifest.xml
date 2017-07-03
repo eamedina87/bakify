@@ -31,6 +31,14 @@
                 android:value=".main.ui.MainActivity"
                 />
         </activity>
+        <activity android:name=".detail.ui.RecipeDetailPaneActivity"
+            android:parentActivityName=".main.ui.MainActivity"
+            android:launchMode="singleTop"
+            >
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value=".main.ui.MainActivity"
+                />
+        </activity>
         <activity android:name=".video.ui.StepVideoActivity"
             android:parentActivityName=".detail.ui.RecipeDetailActivity"
             android:label="@string/step_video_title"

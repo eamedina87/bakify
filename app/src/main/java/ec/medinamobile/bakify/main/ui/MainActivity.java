@@ -20,6 +20,7 @@ import butterknife.ButterKnife;
 import ec.medinamobile.bakify.R;
 import ec.medinamobile.bakify.database.BakifyProvider;
 import ec.medinamobile.bakify.detail.ui.RecipeDetailActivity;
+import ec.medinamobile.bakify.detail.ui.RecipeDetailPaneActivity;
 import ec.medinamobile.bakify.entities.Recipe;
 import ec.medinamobile.bakify.main.adapters.OnRecipeItemClickListener;
 import ec.medinamobile.bakify.main.adapters.RecipesAdapter;
@@ -183,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements OnRecipeLoadingLi
     public void onRecipeClicked(Recipe recipe) {
         //Start the new Activity with the Ingredients, Steps and Videos
         //Toast.makeText(this, recipe.getName(),Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, RecipeDetailActivity.class);
+        Intent intent = new Intent(this, RecipeDetailPaneActivity.class);
         Bundle bundle = new Bundle();
         bundle.putParcelable(Constants.INTENT_EXTRA_RECIPE, recipe);
         intent.putExtras(bundle);

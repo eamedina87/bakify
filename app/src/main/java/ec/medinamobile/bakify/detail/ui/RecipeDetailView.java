@@ -8,8 +8,6 @@ import ec.medinamobile.bakify.entities.Step;
  */
 
 public interface RecipeDetailView {
-    void enableViews();
-    void disableViews();
     void onIngredientsLoaded(Ingredient[] ingredients);
     void onStepsLoaded(Step[] steps);
     void showStepVideo(Step step);
