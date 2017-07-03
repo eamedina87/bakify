@@ -13,8 +13,8 @@ public class Recipe implements Parcelable {
 
     private int id;
     private String name;
-    private ArrayList<Ingredient> ingredients;
-    private ArrayList<Step> steps;
+    private Ingredient[] ingredients;
+    private Step[] steps;
     private int servings;
     private String image;
 
@@ -25,8 +25,8 @@ public class Recipe implements Parcelable {
     public Recipe(Parcel parcel) {
         setId(parcel.readInt());
         setName(parcel.readString());
-        setIngredients(parcel.readArrayList(Ingredient.class.getClassLoader()));
-        setSteps(parcel.readArrayList(Step.class.getClassLoader()));
+        setIngredients((Ingredient[]) parcel.readArray(Ingredient.class.getClassLoader()));
+        setSteps((Step[])parcel.readArray(Step.class.getClassLoader()));
         setServings(parcel.readInt());
         setImage(parcel.readString());
     }
@@ -55,8 +55,8 @@ public class Recipe implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(getId());
         parcel.writeString(getName());
-        parcel.writeSerializable(getIngredients());
-        parcel.writeSerializable(getSteps());
+        parcel.writeArray(getIngredients());
+        parcel.writeArray(getSteps());
         parcel.writeInt(getServings());
         parcel.writeString(getImage());
     }
@@ -77,19 +77,19 @@ public class Recipe implements Parcelable {
         this.name = name;
     }
 
-    public ArrayList<Ingredient> getIngredients() {
+    public Ingredient[] getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(ArrayList<Ingredient> ingredients) {
+    public void setIngredients(Ingredient[] ingredients) {
         this.ingredients = ingredients;
     }
 
-    public ArrayList<Step> getSteps() {
+    public Step[] getSteps() {
         return steps;
     }
 
-    public void setSteps(ArrayList<Step> steps) {
+    public void setSteps(Step[] steps) {
         this.steps = steps;
     }
 
@@ -108,4 +108,6 @@ public class Recipe implements Parcelable {
     public void setImage(String image) {
         this.image = image;
     }
+
 }
+

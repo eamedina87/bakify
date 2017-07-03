@@ -8,10 +8,12 @@ import android.support.v4.content.Loader;
 import ec.medinamobile.bakify.entities.Recipe;
 
 /**
- * Created by Supertel on 30/6/17.
+ * Created by Erick on 30/6/17.
  */
 
 public class RecipesLoaderCallbacks implements LoaderManager.LoaderCallbacks<Recipe[]> {
+
+    public static final int RECIPE_LOADER_ID = 9000;
 
     private Context mContext;
     private String mUrl;
@@ -19,32 +21,24 @@ public class RecipesLoaderCallbacks implements LoaderManager.LoaderCallbacks<Rec
     private Recipe[] mRecipes;
     private RecipesAsyncTaskLoader mRecipesLoader;
 
-    public interface OnRecipeLoadingListener{
-        void onRecipesStartLoading();
-        void onRecipesLoaded(Recipe[] recipes);
-
-    }
-
     public RecipesLoaderCallbacks(Context context, String url, OnRecipeLoadingListener listener){
         mContext = context;
         mUrl = url;
         mListener = listener;
     }
 
-
-
     @Override
     public Loader<Recipe[]> onCreateLoader(int id, Bundle args) {
         mListener.onRecipesStartLoading();
-        if (mRecipesLoader==null){
-            mRecipesLoader = new RecipesAsyncTaskLoader(mContext, mUrl);
-        }
-        return mRecipesLoader;
+        return new RecipesAsyncTaskLoader(mContext, mUrl);
     }
 
     @Override
     public void onLoadFinished(Loader<Recipe[]> loader, Recipe[] data) {
         mListener.onRecipesLoaded(data);
+        if (data!=null){
+            mRecipes = data;
+        }
     }
 
     @Override

@@ -3,4 +3,13 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorWhite">#FFFFFF</color>
+
+    <color name="recipe_item_text_color">@color/colorWhite</color>
+
+    <color name="recipe_1">#FF9800</color>
+    <color name="recipe_2">#7C4DFF</color>
+    <color name="recipe_3">#CDDC39</color>
+    <color name="recipe_4">#03A9F4</color>
+    <color name="recipe_5">#E91E63</color>
 </resources>

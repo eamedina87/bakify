@@ -17,7 +17,7 @@ public class Ingredient implements Parcelable {
     public static final String MEASURE_OUNCE = "OZ";
     public static final String MEASURE_UNIT = "UNIT";
 
-    private int quantity;
+    private float quantity;
     private String measure;
     private String ingredient;
 
@@ -26,7 +26,7 @@ public class Ingredient implements Parcelable {
     }
 
     public Ingredient(Parcel parcel) {
-        setQuantity(parcel.readInt());
+        setQuantity(parcel.readFloat());
         setMeasure(parcel.readString());
         setIngredient(parcel.readString());
     }
@@ -50,16 +50,16 @@ public class Ingredient implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(getQuantity());
+        parcel.writeFloat(getQuantity());
         parcel.writeString(getMeasure());
         parcel.writeString(getIngredient());
     }
 
-    public int getQuantity() {
+    public float getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(float quantity) {
         this.quantity = quantity;
     }
 

@@ -1,39 +1,140 @@
 package ec.medinamobile.bakify.main.ui;
 
+import android.content.ContentValues;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ec.medinamobile.bakify.R;
+import ec.medinamobile.bakify.database.BakifyProvider;
+import ec.medinamobile.bakify.detail.ui.RecipeDetailActivity;
+import ec.medinamobile.bakify.entities.Recipe;
+import ec.medinamobile.bakify.main.adapters.OnRecipeItemClickListener;
+import ec.medinamobile.bakify.main.adapters.RecipesAdapter;
+import ec.medinamobile.bakify.main.loaders.OnRecipeCursorLoadingListener;
+import ec.medinamobile.bakify.main.loaders.OnRecipeLoadingListener;
+import ec.medinamobile.bakify.main.loaders.RecipesCursorLoader;
+import ec.medinamobile.bakify.main.loaders.RecipesLoaderCallbacks;
+import ec.medinamobile.bakify.utils.Constants;
+import ec.medinamobile.bakify.utils.DatabaseUtils;
+import ec.medinamobile.bakify.utils.JsonUtils;
+import ec.medinamobile.bakify.utils.NetworkUtils;
+import ec.medinamobile.bakify.utils.PreferenceUtils;
 
-public class MainActivity extends AppCompatActivity {
 
+/* Activity displays a Grid ReyclerView with the recipes name and image if available
+ * If no information is in the database, it downloads information from the URL and saves it to the DB via
+ * the Content Provider
+ */
+
+public class MainActivity extends AppCompatActivity implements OnRecipeLoadingListener, OnRecipeItemClickListener, OnRecipeCursorLoadingListener {
+
+    @BindView(R.id.contentLayout)
+    FrameLayout contentLayout;
     @BindView(R.id.main_recyclerview)
     RecyclerView recipesList;
     @BindView(R.id.main_empty_display)
     TextView emptyDisplay;
+    @BindView(R.id.progressbar)
+    ProgressBar progressBar;
+
+    private Recipe[] recipes;
+    private RecipesAdapter mAdapter;
+    private RecipesLoaderCallbacks mRecipesLoaderCallbacks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.app_bar_main);
+        setContentView(R.layout.content_main);
         ButterKnife.bind(this);
-
+        setupRecyclerView();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (PreferenceUtils.areRecipesInDatabase(this)){
+            loadRecipesFromDB();
+        } else {
+            loadRecipesFromServer();
+        }
+    }
+
+    private void loadRecipesFromServer() {
+
+        String jsonString = JsonUtils.readJsonFromAssets(this);
+        Recipe[] recipes = JsonUtils.getRecipesFromJson(jsonString);
+        onRecipesLoaded(recipes);
+        /*
+        if (NetworkUtils.isInternetAvailable(this)){
+            showProgress();
+            hideAllButProgressBar();
+            mRecipesLoaderCallbacks =
+                    new RecipesLoaderCallbacks(this, NetworkUtils.JSON_RECIPES_SERVER_URL, this);
+            getSupportLoaderManager().initLoader(
+                    RecipesLoaderCallbacks.RECIPE_LOADER_ID,
+                    null,
+                    mRecipesLoaderCallbacks);
+        } else {
+            showInternetUnavailableSnackbar();
+
+        }
+        */
+    }
+
+
+
+    private void reloadRecipesFromServer() {
+        if (NetworkUtils.isInternetAvailable(this)){
+            showProgress();
+            hideAllButProgressBar();
+            getSupportLoaderManager().restartLoader(
+                    RecipesLoaderCallbacks.RECIPE_LOADER_ID,
+                    null,
+                    mRecipesLoaderCallbacks);
+        } else {
+            showInternetUnavailableSnackbar();
+
+        }
+    }
+
+    private void loadRecipesFromDB() {
+        RecipesCursorLoader cursorLoaderCallbacks = new RecipesCursorLoader(this, this);
+        getSupportLoaderManager().initLoader(
+                RecipesCursorLoader.RECIPER_CURSOR_LOADER_ID,
+                null,
+                cursorLoaderCallbacks);
+    }
+
+    private void setupRecyclerView() {
+        mAdapter = new RecipesAdapter(recipes, this);
+        recipesList.setAdapter(mAdapter);
+        RecyclerView.LayoutManager layoutManager =
+                new GridLayoutManager(this, 1, LinearLayoutManager.VERTICAL,false);
+        recipesList.setLayoutManager(layoutManager);
+    }
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -49,11 +150,95 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_refresh) {
+            reloadRecipesFromServer();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+*/
+
+    @Override
+    public void onRecipesStartLoading() {
+        showProgress();
+    }
+
+    @Override
+    public void onRecipesLoaded(Recipe[] recipes) {
+        hideProgress();
+        if (recipes==null || recipes.length==0){
+            showEmptyDisplay();
+        } else {
+            showRecyclerView();
+            ContentValues[] valuesArray = DatabaseUtils.getRecipeContentValuesArray(recipes);
+            getContentResolver().bulkInsert(BakifyProvider.Recipes.RECIPES_CONTENT_URI,valuesArray);
+            PreferenceUtils.setRecipesInDatabase(this, true);
+            onResume();
+        }
+    }
+
+
+
+
+    @Override
+    public void onRecipeClicked(Recipe recipe) {
+        //Start the new Activity with the Ingredients, Steps and Videos
+        Toast.makeText(this, recipe.getName(),Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, RecipeDetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(Constants.INTENT_EXTRA_RECIPE, recipe);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+
+
+    @Override
+    public void onRecipeCursorStartLoading() {
+        showProgress();
+    }
+
+    @Override
+    public void onRecipeCursorLoaded(Cursor cursor) {
+        hideProgress();
+        Recipe[] recipes = DatabaseUtils.getRecipeArrayFromCursor(cursor);
+        mAdapter.swapRecipes(recipes);
+
+    }
+
+    private void showProgress() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void hideProgress() {
+        progressBar.setVisibility(View.INVISIBLE);
+    }
+
+    private void hideAllButProgressBar(){
+        emptyDisplay.setVisibility(View.INVISIBLE);
+        recipesList.setVisibility(View.INVISIBLE);
+    }
+
+    private void showEmptyDisplay() {
+        emptyDisplay.setVisibility(View.VISIBLE);
+        recipesList.setVisibility(View.INVISIBLE);
+    }
+
+    private void showRecyclerView() {
+        emptyDisplay.setVisibility(View.INVISIBLE);
+        recipesList.setVisibility(View.VISIBLE);
+    }
+
+    private void showInternetUnavailableSnackbar() {
+        Snackbar.make(contentLayout, R.string.error_no_internet_connection, Snackbar.LENGTH_LONG)
+                .setAction(R.string.btn_retry, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        loadRecipesFromServer();
+
+                    }
+                }).show();
+    }
 }

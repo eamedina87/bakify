@@ -1,7 +1,14 @@
 package ec.medinamobile.bakify.utils;
 
-import java.io.IOException;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Build;
 
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
+import ec.medinamobile.bakify.main.ui.MainActivity;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -12,21 +19,32 @@ import okhttp3.Response;
 
 public class NetworkUtils {
 
-    public static String getRecipesFromServer(String Url){
+    public static final String JSON_RECIPES_SERVER_URL = "http://go.udacity.com/android-baking-app-json";
 
+    public static String getRecipesFromServer(String Url){
+        String result = null;
         try {
-            OkHttpClient client = new OkHttpClient();
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .connectTimeout(15, TimeUnit.SECONDS)
+                    .readTimeout(15, TimeUnit.SECONDS)
+                    .build()
+                    ;
             Request request = new Request.Builder()
                     .url(Url)
                     .build();
             Response response =  client.newCall(request).execute();
-            return response.body().string();
+            result = response.body().string();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        return result;
     }
 
 
+    public static boolean isInternetAvailable(Context context) {
+        ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
+        return activeNetwork!=null && activeNetwork.isAvailable() && activeNetwork.isConnected();
+    }
 }

@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/contentLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -17,9 +18,18 @@
         android:id="@+id/main_empty_display"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sorry! No recipes found"
+        android:text="@string/error_empty_database_or_bad_response"
         android:gravity="center"
+        android:visibility="invisible"
         android:layout_gravity="center"
          />
+
+    <ProgressBar
+        android:id="@+id/progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="invisible"
+        />
 
 </FrameLayout>

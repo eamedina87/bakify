@@ -5,4 +5,9 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="recipe_name_placeholder">Recipe Name</string>
+    <string name="error_no_internet_connection">No Internet connection available</string>
+    <string name="btn_retry">Retry</string>
+    <string name="error_empty_database_or_bad_response">No recipes found. Please try again!</string>
+    <string name="action_refresh">Refresh</string>
 </resources>

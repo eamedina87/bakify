@@ -31,6 +31,8 @@ dependencies {
     compile "com.jakewharton:butterknife:$rootProject.butterKnifeLibraryVersion"
     compile "com.squareup.okhttp3:okhttp:$rootProject.okhttpLibraryVersion"
     compile "com.google.code.gson:gson:$rootProject.gsonLibraryVersion"
+    compile "com.squareup.picasso:picasso:$rootProject.picassoLibraryVersion"
+
 
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterKnifeLibraryVersion"
     annotationProcessor "net.simonvt.schematic:schematic-compiler:$rootProject.schematicLibraryVersion"

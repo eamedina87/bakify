@@ -22,7 +22,7 @@ public final class BakifyProvider {
         path = "recipes",
         type = "vnd.android.cursor.dir/recipe",
         defaultSort = RecipesColumns.SERVER_ID + " ASC")
-    public static final Uri RECIPES = Uri.parse("content://" + AUTHORITY + "/recipes");
+    public static final Uri RECIPES_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/recipes");
   }
 
     @TableEndpoint(table = BakifyDatabase.INGREDIENTS) public static class Ingredients {
@@ -31,7 +31,7 @@ public final class BakifyProvider {
                 path = "ingredients",
                 type = "vnd.android.cursor.dir/ingredient",
                 defaultSort = IngredientsColumns._ID+ " ASC")
-        public static final Uri INGREDIENTS = Uri.parse("content://" + AUTHORITY + "/ingredients");
+        public static final Uri INGREDIENTS_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/ingredients");
     }
 
     @TableEndpoint(table = BakifyDatabase.STEPS) public static class Steps {
@@ -40,7 +40,7 @@ public final class BakifyProvider {
                 path = "steps",
                 type = "vnd.android.cursor.dir/step",
                 defaultSort = StepsColumns.SERVER_ID + " ASC")
-        public static final Uri STEPS = Uri.parse("content://" + AUTHORITY + "/steps");
+        public static final Uri STEPS_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/steps");
     }
 
 

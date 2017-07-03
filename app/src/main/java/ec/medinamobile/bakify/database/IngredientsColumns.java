@@ -7,8 +7,6 @@ import net.simonvt.schematic.annotation.PrimaryKey;
 
 import java.util.ArrayList;
 
-import ec.medinamobile.bakify.entities.Ingredient;
-import ec.medinamobile.bakify.entities.Step;
 
 import static net.simonvt.schematic.annotation.DataType.Type.INTEGER;
 import static net.simonvt.schematic.annotation.DataType.Type.TEXT;
