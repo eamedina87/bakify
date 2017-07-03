@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import butterknife.BindView;
@@ -32,6 +34,10 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
     RecyclerView ingredientsList;
     @BindView(R.id.detail_steps_list)
     RecyclerView stepsList;
+    @BindView(R.id.detail_ingredients_title)
+    TextView ingredientsTitle;
+    @BindView(R.id.detail_steps_title)
+    TextView stepsTitle;
     private Recipe mRecipe;
     RecipeDetailPresenter presenter;
 
@@ -44,6 +50,12 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
         setupPresenter();
         getIngredientsFromDB();
         getStepsFromDB();
+        setupActionBar();
+    }
+
+    private void setupActionBar() {
+        getSupportActionBar().setTitle(mRecipe.getName());
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void setupPresenter() {
@@ -74,7 +86,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
     }
 
     private void setupStepsRecyclerView() {
-        StepsAdapter stepsAdapter = new StepsAdapter(mRecipe.getSteps());
+        StepsAdapter stepsAdapter = new StepsAdapter(mRecipe.getSteps(), this);
         stepsList.setAdapter(stepsAdapter);
         RecyclerView.LayoutManager ingredientsManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         stepsList.setLayoutManager(ingredientsManager);
@@ -101,6 +113,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
     public void onIngredientsLoaded(Ingredient[] ingredients) {
         if (ingredients!=null && ingredients.length>0){
             mRecipe.setIngredients(ingredients);
+            ingredientsTitle.setText(String.format(getString(R.string.ingredients_title),ingredients.length));
             setupIngredientsRecyclerView();
         } else {
             //Show EmptyDisplay
@@ -111,6 +124,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
     public void onStepsLoaded(Step[] steps) {
         if (steps!=null && steps.length>0){
             mRecipe.setSteps(steps);
+            stepsTitle.setText(String.format(getString(R.string.steps_title),steps.length));
             setupStepsRecyclerView();
         } else {
             //Show EmptyDisplay
@@ -126,6 +140,6 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
 
     @Override
     public void onStepClicked(Step step) {
-        Toast.makeText(this, step.getId(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, String.valueOf(step.getShortDescription()), Toast.LENGTH_SHORT).show();
     }
 }

@@ -1,6 +1,7 @@
 package ec.medinamobile.bakify.detail;
 
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -21,7 +22,7 @@ public class RecipeDetailPresenterImpl implements RecipeDetailPresenter {
     private RecipeDetailView mView;
     private Context mContext;
 
-    public RecipeDetailPresenterImpl(Context context, RecipeDetailView view){
+    public RecipeDetailPresenterImpl(AppCompatActivity context, RecipeDetailView view){
         mContext = context;
         mView = view;
         mEventBus = EventBusImpl.getInstance();

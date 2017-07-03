@@ -59,11 +59,11 @@ public class MainActivity extends AppCompatActivity implements OnRecipeLoadingLi
         setContentView(R.layout.content_main);
         ButterKnife.bind(this);
         setupRecyclerView();
+        setupRecipes();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+
+    private void setupRecipes() {
         if (PreferenceUtils.areRecipesInDatabase(this)){
             loadRecipesFromDB();
         } else {
@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements OnRecipeLoadingLi
             valuesArray = DatabaseUtils.getStepsContentValuesArray(recipes);
             getContentResolver().bulkInsert(BakifyProvider.Steps.STEPS_CONTENT_URI, valuesArray);
             PreferenceUtils.setRecipesInDatabase(this, true);
-            onResume();
+            setupRecipes();
         }
     }
 
@@ -179,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements OnRecipeLoadingLi
     @Override
     public void onRecipeClicked(Recipe recipe) {
         //Start the new Activity with the Ingredients, Steps and Videos
-        Toast.makeText(this, recipe.getName(),Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, recipe.getName(),Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, RecipeDetailActivity.class);
         Bundle bundle = new Bundle();
         bundle.putParcelable(Constants.INTENT_EXTRA_RECIPE, recipe);

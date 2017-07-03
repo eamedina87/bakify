@@ -1,9 +1,11 @@
 package ec.medinamobile.bakify.detail.adapters;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -18,9 +20,11 @@ import ec.medinamobile.bakify.entities.Step;
 public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> {
 
     private final Step[] mSteps;
+    private OnStepItemClickListener mListener;
 
-    public StepsAdapter(Step[] steps){
+    public StepsAdapter(Step[] steps, OnStepItemClickListener listener){
         mSteps = steps;
+        mListener = listener;
     }
 
     @Override
@@ -32,7 +36,12 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Step step = mSteps[position];
-        holder.description.setText(step.getDescription());
+        holder.position = position;
+        holder.description.setText(step.getShortDescription());
+        if (step.getVideoURL()!=null && !TextUtils.isEmpty(step.getVideoURL())){
+            holder.videoIcon.setVisibility(View.VISIBLE);
+        }
+
     }
 
     @Override
@@ -44,10 +53,19 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
     public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.step_item_description)
         TextView description;
+        @BindView(R.id.step_item_video_icon)
+        ImageView videoIcon;
+        int position;
 
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mListener.onStepClicked(mSteps[position]);
+                }
+            });
         }
     }
 }

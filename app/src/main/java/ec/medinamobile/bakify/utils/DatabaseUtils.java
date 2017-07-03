@@ -101,7 +101,7 @@ public class DatabaseUtils {
         for (Recipe recipe:recipes){
             Ingredient[] ingredients = recipe.getIngredients();
             for (Ingredient ingredient:ingredients){
-                ingredient.setRecipeId(recipe.getServerId());
+                ingredient.setRecipeId(recipe.getId());
                 mIngredientsList.add(ingredient);
             }
         }
@@ -125,7 +125,7 @@ public class DatabaseUtils {
         for (Recipe recipe:recipes){
             Step[] steps = recipe.getSteps();
             for (Step step:steps){
-                step.setRecipeId(recipe.getServerId());
+                step.setRecipeId(recipe.getId());
                 mStepsList.add(step);
             }
         }
