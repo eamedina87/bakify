@@ -9,7 +9,7 @@
         android:id="@+id/step_video_frame"
         android:layout_width="match_parent"
         android:layout_height="@dimen/step_video_height"
-        android:layout_weight="1"
+        android:layout_weight="2"
         >
 
 
@@ -20,7 +20,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/detail_title_padding"
+        android:layout_weight="1"
         android:layout_margin="@dimen/divider_lateral_margin"
+        android:layout_gravity="center"
         android:textAppearance="@style/mRecipe"
         tools:text="Step description"
         />

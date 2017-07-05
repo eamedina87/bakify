@@ -41,7 +41,6 @@ import ec.medinamobile.bakify.utils.PreferenceUtils;
  */
 
 //(TODO) Apply MVP Pattern
-//(TODO) Test on orientation changes
 //(TODO) Add contentDescription
 public class MainActivity extends AppCompatActivity implements OnRecipeLoadingListener, OnRecipeItemClickListener, OnRecipeCursorLoadingListener {
 
@@ -56,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements OnRecipeLoadingLi
 
     private RecipesAdapter mAdapter;
     private RecipesLoaderCallbacks mRecipesLoaderCallbacks;
+    private Recipe[] mRecipes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +63,23 @@ public class MainActivity extends AppCompatActivity implements OnRecipeLoadingLi
         setContentView(R.layout.content_main);
         ButterKnife.bind(this);
         setupRecyclerView();
-        setupRecipes();
+        if (mRecipes==null){
+            setupRecipes();
+        }
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArray(Constants.BUNDLE_RECIPES, mRecipes);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mRecipes = (Recipe[]) savedInstanceState.getParcelableArray(Constants.BUNDLE_RECIPES);
+        mAdapter.swapRecipes(mRecipes);
+    }
 
     private void setupRecipes() {
         if (PreferenceUtils.areRecipesInDatabase(this)){
@@ -128,56 +142,35 @@ public class MainActivity extends AppCompatActivity implements OnRecipeLoadingLi
                 new GridLayoutManager(this, 1, LinearLayoutManager.VERTICAL,false);
         recipesList.setLayoutManager(layoutManager);
     }
-/*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_refresh) {
-            reloadRecipesFromServer();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-*/
 
     @Override
     public void onRecipesStartLoading() {
+        //Method of Server Loader
         showProgress();
     }
 
     @Override
     public void onRecipesLoaded(Recipe[] recipes) {
+        //Method of Server Loader
         hideProgress();
         if (recipes==null || recipes.length==0){
             showEmptyDisplay();
         } else {
             showRecyclerView();
-            ContentValues[] valuesArray = DatabaseUtils.getRecipeContentValuesArray(recipes);
-            getContentResolver().bulkInsert(BakifyProvider.Recipes.RECIPES_CONTENT_URI,valuesArray);
-            valuesArray = DatabaseUtils.getIngredientsContentValuesArray(recipes);
-            getContentResolver().bulkInsert(BakifyProvider.Ingredients.INGREDIENTS_CONTENT_URI, valuesArray);
-            valuesArray = DatabaseUtils.getStepsContentValuesArray(recipes);
-            getContentResolver().bulkInsert(BakifyProvider.Steps.STEPS_CONTENT_URI, valuesArray);
-            PreferenceUtils.setRecipesInDatabase(this, true);
+            insertDataInDb(recipes);
             setupRecipes();
         }
     }
 
-
+    private void insertDataInDb(Recipe[] recipes) {
+        ContentValues[] valuesArray = DatabaseUtils.getRecipeContentValuesArray(recipes);
+        getContentResolver().bulkInsert(BakifyProvider.Recipes.RECIPES_CONTENT_URI,valuesArray);
+        valuesArray = DatabaseUtils.getIngredientsContentValuesArray(recipes);
+        getContentResolver().bulkInsert(BakifyProvider.Ingredients.INGREDIENTS_CONTENT_URI, valuesArray);
+        valuesArray = DatabaseUtils.getStepsContentValuesArray(recipes);
+        getContentResolver().bulkInsert(BakifyProvider.Steps.STEPS_CONTENT_URI, valuesArray);
+        PreferenceUtils.setRecipesInDatabase(this, true);
+    }
 
 
     @Override
@@ -201,9 +194,8 @@ public class MainActivity extends AppCompatActivity implements OnRecipeLoadingLi
     @Override
     public void onRecipeCursorLoaded(Cursor cursor) {
         hideProgress();
-        Recipe[] recipes = DatabaseUtils.getRecipeArrayFromCursor(cursor);
-        mAdapter.swapRecipes(recipes);
-
+        mRecipes = DatabaseUtils.getRecipeArrayFromCursor(cursor);
+        mAdapter.swapRecipes(mRecipes);
     }
 
     private void showProgress() {

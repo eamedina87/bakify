@@ -19,7 +19,7 @@ import ec.medinamobile.bakify.entities.Step;
 
 public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> {
 
-    private final Step[] mSteps;
+    private Step[] mSteps;
     private OnStepItemClickListener mListener;
 
     public StepsAdapter(Step[] steps, OnStepItemClickListener listener){
@@ -48,6 +48,11 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
     public int getItemCount() {
         if (mSteps==null) return 0;
         return mSteps.length;
+    }
+
+    public void swapSteps(Step[] steps) {
+        mSteps = steps;
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

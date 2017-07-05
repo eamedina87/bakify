@@ -36,23 +36,26 @@ public class StepVideoFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.step_video_activity, container, false);
+        View view = inflater.inflate(R.layout.fragment_step_video, container, false);
         ButterKnife.bind(this, view);
         return view;
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //setupActionBar();
-    }
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (getArguments()!=null){
+            mStep = getArguments().getParcelable(Constants.BUNDLE_STEP);
+            if (mStep!=null){
+                setStep(mStep);
+            }
+        }
 
-    private void setupActionBar() {
-        getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void setActionbarTitle(){
         if (mStep.getServerId()>0) {
+            getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
             getActivity().getActionBar().setTitle(String.format(getString(R.string.step_video_title_number), mStep.getServerId()));
         }
     }

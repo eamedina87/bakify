@@ -34,19 +34,24 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         return new ViewHolder(view);
     }
 
+
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Ingredient ingredient = mIngredients[position];
         holder.name.setText(ingredient.getIngredient());
         holder.quantity.setText(AdapterUtils.getStringFromFloat(ingredient.getQuantity()));
         holder.measure.setImageResource(AdapterUtils.getImageResourceForMeasure(ingredient.getMeasure()));
-
     }
 
     @Override
     public int getItemCount() {
         if (mIngredients==null) return 0;
         return mIngredients.length;
+    }
+
+    public void swapIngredients(Ingredient[] ingredients) {
+        mIngredients = ingredients;
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

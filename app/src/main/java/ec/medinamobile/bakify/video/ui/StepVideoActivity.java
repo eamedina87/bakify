@@ -31,7 +31,7 @@ public class StepVideoActivity extends AppCompatActivity implements StepVideoVie
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.step_video_activity);
+        setContentView(R.layout.fragment_step_video);
         ButterKnife.bind(this);
         getIntentData();
         setupActionBar();
