@@ -1,0 +1,55 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorPrimaryDark"
+    android:orientation="horizontal"
+    android:padding="@dimen/widget_margin">
+
+    <TextView
+        android:id="@+id/widget_recipe_name"
+        android:layout_width="@dimen/widget_recipes_width"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/recipe__text_padding"
+        android:text="@string/recipe_title_widget"
+        android:background="@color/colorAccent"
+        />
+
+    <ListView
+        android:id="@+id/widget_recipes"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+
+        android:layout_below="@id/widget_recipe_name"
+        android:layout_alignRight="@id/widget_recipe_name"
+
+        >
+
+    </ListView>
+
+    <TextView
+        android:id="@+id/widget_ingredients_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/recipe__text_padding"
+        android:text="@string/ingredients_title_widget"
+        android:background="@color/colorAccent"
+        android:layout_toRightOf="@id/widget_recipe_name"
+        />
+
+    <ListView
+        android:id="@+id/widget_ingredients"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/widget_ingredients_tv"
+        android:background="@color/colorWhite"
+        android:layout_alignLeft="@id/widget_ingredients_tv"
+        android:layout_alignParentLeft="@id/widget_ingredients_tv"
+        >
+
+    </ListView>
+
+
+</RelativeLayout>

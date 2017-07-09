@@ -21,7 +21,7 @@
 
     <TextView
         android:id="@+id/ingredient_quantity"
-        android:layout_width="50dp"
+        android:layout_width="@dimen/ingredient_item_quantity_width"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/view_lateral_margin"
         android:gravity="center_vertical|right"

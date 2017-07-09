@@ -25,6 +25,14 @@
     <dimen name="steps_list_height">150dp</dimen>
     <dimen name="divider_lateral_margin">16dp</dimen>
 
+    <!--
+Refer to App Widget Documentation for margin information
+http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
+    -->
+    <dimen name="widget_margin">8dp</dimen>
+    <dimen name="widget_recipes_width">90dp</dimen>
+    <dimen name="widget_ingredient_height">40dp</dimen>
+    <dimen name="ingredient_item_quantity_width">50dp</dimen>
 
 
 </resources>

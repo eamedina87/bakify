@@ -42,5 +42,9 @@
 
     <style name="mQuantity" parent="Base.TextAppearance.AppCompat.Headline"></style>
 
+    <style name="mWidgetRecipe" parent="Base.TextAppearance.AppCompat.Subhead">
+        <item name="android:textColor">@color/recipe_item_text_color</item>
+    </style>
+
 
 </resources>
