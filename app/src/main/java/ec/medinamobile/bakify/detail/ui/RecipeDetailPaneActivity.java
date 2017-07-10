@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.FrameLayout;
 
@@ -22,8 +23,7 @@ import ec.medinamobile.bakify.video.ui.StepVideoFragment;
 /**
  * Created by Erick on 2/7/17.
  */
-//(TODO) Test on configuration changes with Exaplayer
-//(TODO) Add Content Description
+
 public class RecipeDetailPaneActivity extends AppCompatActivity implements RecipeDetailView, OnIngredientsStepsFragmentCallbacks {
 
     @BindView(R.id.detail_pane_ingredients_steps)
@@ -61,6 +61,7 @@ public class RecipeDetailPaneActivity extends AppCompatActivity implements Recip
         if (mSelectedStep!=null){
             outState.putParcelable(Constants.BUNDLE_STEP, mSelectedStep);
         }
+
     }
 
     @Override
@@ -90,6 +91,7 @@ public class RecipeDetailPaneActivity extends AppCompatActivity implements Recip
     private void setupVideoFragment() {
         if (stepDetailContainer!=null){
             mTwoPane = true;
+            if (stepVideoFragment!=null) stepVideoFragment.onStop();
             stepVideoFragment = new StepVideoFragment();
             if (mSelectedStep!=null) {
                 Bundle args = new Bundle();
@@ -160,21 +162,13 @@ public class RecipeDetailPaneActivity extends AppCompatActivity implements Recip
     @Override
     public void showStepVideo(Step step) {
         if (mTwoPane) {
-            /*Intent intent = new Intent(this, StepVideoActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putParcelable(Constants.INTENT_EXTRA_STEP, step);
-            intent.putExtras(bundle);
-            startActivity(intent);*/
             stepVideoFragment.setStep(step);
         } else {
-            StepVideoFragment stepFragment = new StepVideoFragment();
+            Intent intent = new Intent(this, StepVideoActivity.class);
             Bundle videoBundle = new Bundle();
             videoBundle.putParcelable(Constants.INTENT_EXTRA_STEP, step);
-            stepFragment.setArguments(videoBundle);
-            getSupportFragmentManager().beginTransaction().
-                    replace(R.id.detail_pane_ingredients_steps, stepFragment).
-                    addToBackStack(Constants.BUNDLE_STEP).
-                    commit();
+            intent.putExtras(videoBundle);
+            startActivity(intent);
         }
     }
 

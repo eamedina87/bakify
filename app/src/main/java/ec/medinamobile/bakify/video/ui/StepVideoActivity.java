@@ -1,13 +1,34 @@
 package ec.medinamobile.bakify.video.ui;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
+import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
+import com.google.android.exoplayer2.extractor.ExtractorsFactory;
+import com.google.android.exoplayer2.source.ExtractorMediaSource;
+import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.source.hls.HlsMediaSource;
+import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.trackselection.TrackSelection;
+import com.google.android.exoplayer2.trackselection.TrackSelector;
+import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
+import com.google.android.exoplayer2.upstream.BandwidthMeter;
+import com.google.android.exoplayer2.upstream.DataSource;
+import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.google.android.exoplayer2.upstream.TransferListener;
+import com.google.android.exoplayer2.util.Util;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,9 +45,11 @@ public class StepVideoActivity extends AppCompatActivity implements StepVideoVie
 
     @BindView(R.id.step_description)
     TextView description;
-    @BindView(R.id.step_video_frame)
-    FrameLayout videoFrame;
+    @BindView(R.id.step_video)
+    SimpleExoPlayerView videoFrame;
     private Step mStep;
+    private SimpleExoPlayer player;
+    private SimpleExoPlayer mPlayer;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,6 +83,40 @@ public class StepVideoActivity extends AppCompatActivity implements StepVideoVie
             return;
         }
 
+        Handler mainHandler = new Handler();
+        BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
+        TrackSelection.Factory videoTrackSelectionFactory =
+                new AdaptiveTrackSelection.Factory(bandwidthMeter);
+        TrackSelector trackSelector =
+                new DefaultTrackSelector(videoTrackSelectionFactory);
 
+        mPlayer = ExoPlayerFactory.newSimpleInstance(this, trackSelector);
+        videoFrame.setPlayer(mPlayer);
+
+        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(this,
+                Util.getUserAgent(this, "yourApplicationName"), (TransferListener<? super DataSource>) bandwidthMeter);
+
+        //DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(mContext,
+        //        Util.getUserAgent(mContext, getString(R.string.app_name)));
+        ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
+
+        MediaSource mediaSource = new ExtractorMediaSource(Uri.parse(mStep.getVideoURL()),
+                dataSourceFactory, extractorsFactory, null, null);
+
+        mPlayer.prepare(mediaSource);
+        mPlayer.setPlayWhenReady(true);
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (player!=null) player.stop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (player!=null) player.release();
     }
 }

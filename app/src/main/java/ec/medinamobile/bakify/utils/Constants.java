@@ -21,4 +21,6 @@ public class Constants {
     public static final String BUNDLE_INGREDIENTS_STATE = "bundle_ingredients_state";
     public static final String BUNDLE_STEPS_STATE = "bundle_steps_state";
 
+    public static final String FRAGMENT_INGREDIENTS_STEPS = "fragment_ingredients_steps";
+    public static final String FRAGMENT_STEP_VIDEO = "fragment_step_video";
 }

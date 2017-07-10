@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -57,9 +58,9 @@ public class IngredientsStepsFragment extends Fragment implements OnStepItemClic
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_ingredients_steps, container, false);
         ButterKnife.bind(this, view);
-        Log.d(this.getClass().getName(),"OnCreateView");
         return view;
     }
+
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -71,6 +72,12 @@ public class IngredientsStepsFragment extends Fragment implements OnStepItemClic
         outState.putParcelable(Constants.BUNDLE_INGREDIENTS_STATE, mStepState);
         Log.d(this.getClass().getName(),"OnSaveInstanceState");
 
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d("IngredientsStepsFrag","onPause");
     }
 
     @Override
