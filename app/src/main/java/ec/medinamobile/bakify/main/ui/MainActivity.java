@@ -91,24 +91,24 @@ public class MainActivity extends AppCompatActivity implements OnRecipeLoadingLi
 
     private void loadRecipesFromServer() {
 
-        String jsonString = JsonUtils.readJsonFromAssets(this);
+        /*String jsonString = JsonUtils.readJsonFromAssets(this);
         Recipe[] recipes = JsonUtils.getRecipesFromJson(jsonString);
-        onRecipesLoaded(recipes);
-        /*
+        onRecipesLoaded(recipes);*/
+
         if (NetworkUtils.isInternetAvailable(this)){
             showProgress();
             hideAllButProgressBar();
             mRecipesLoaderCallbacks =
                     new RecipesLoaderCallbacks(this, NetworkUtils.JSON_RECIPES_SERVER_URL, this);
             getSupportLoaderManager().initLoader(
-                    RecipesLoaderCallbacks.RECIPES_LOADER_ID,
+                    Constants.RECIPES_LOADER_ID,
                     null,
                     mRecipesLoaderCallbacks);
         } else {
             showInternetUnavailableSnackbar();
 
         }
-        */
+
     }
 
 

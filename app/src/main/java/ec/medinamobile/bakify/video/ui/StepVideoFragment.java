@@ -65,9 +65,12 @@ public class StepVideoFragment extends Fragment {
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        if (mPlayer!=null) mPlayer.release();
+    public void onPause() {
+        super.onPause();
+        if (mPlayer!=null){
+            mPlayer.release();
+            mPlayer = null;
+        };
     }
 
     @Override

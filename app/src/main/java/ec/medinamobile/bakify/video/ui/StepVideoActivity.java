@@ -111,12 +111,10 @@ public class StepVideoActivity extends AppCompatActivity implements StepVideoVie
     @Override
     protected void onPause() {
         super.onPause();
-        if (player!=null) player.stop();
+        if (player!=null){
+            player.release();
+            player = null;
+        };
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (player!=null) player.release();
-    }
 }

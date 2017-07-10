@@ -19,7 +19,7 @@ public class PreferenceUtils {
 
     public static void setRecipesInDatabase(Context context, boolean value){
         SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE);
-        preferences.edit().putBoolean(PREF_RECIPES_IN_DB, value).commit();
+        preferences.edit().putBoolean(PREF_RECIPES_IN_DB, value).apply();
     }
 
 
