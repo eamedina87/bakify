@@ -18,6 +18,32 @@ allprojects {
     }
 }
 
+ext{
+    compileSdkVersion = 25
+    buildToolsVersion = "25.0.3"
+    minSdkVersion = 15
+    targetSdkVersion = 25
+    versionCode = 1
+    versionName = "1.0"
+
+    //library version
+    supportLibraryVersion = "25.3.1"
+    constraintLayoutVersion = "1.0.2"
+    schematicLibraryVersion = "0.7.0"
+    butterKnifeLibraryVersion = "8.6.0"
+    okhttpLibraryVersion = "3.8.1"
+    gsonLibraryVersion = "2.8.0"
+    picassoLibraryVersion = "2.5.2"
+    eventBusLibraryVersion = "3.0.0"
+    exoPlayerVersion = "r2.4.3"
+
+    //testing libraries
+    espressoLibraryVersion = "2.2.2"
+    junitLibraryVersion = "4.12"
+
+
+}
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
