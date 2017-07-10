@@ -21,4 +21,15 @@
     <string name="add_widget">Add widget</string>
     <string name="ingredients_title_widget">Ingredients</string>
     <string name="recipe_title_widget">Recipe</string>
+    <string name="error_drm_unsupported_scheme">Unsupported Scheme</string>
+    <string name="error_drm_unknown">DRM Unknown</string>
+    <string name="error_drm_not_supported">DRM not supported</string>
+    <string name="selection_disabled">Selection Disabled</string>
+    <string name="selection_default_none">None</string>
+    <string name="enable_random_adaptation">Enable Random Adaptation</string>
+    <string name="selection_default">Default</string>
+    <string name="error_querying_decoders">Error querying decoders</string>
+    <string name="error_no_secure_decoder">Error no secure decoder %s</string>
+    <string name="error_no_decoder">Error no decoder %s</string>
+    <string name="error_instantiating_decoder">Error instantiating decoder %s</string>
 </resources>
